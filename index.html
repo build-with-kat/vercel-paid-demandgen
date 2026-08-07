@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth × Demand Gen — Expanding Enterprise Pipeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #000000;
+    --bg-raised: #0d0d0d;
+    --bg-card: #111111;
+    --border: #262626;
+    --border-soft: #1a1a1a;
+    --text: #fafafa;
+    --text-dim: #bcbcc2;
+    --text-dimmer: #8f8f96;
+    --blue: #0070f3;
+    --blue-dim: #0070f34d;
+    --green: #2ecc71;
+    --amber: #f5a623;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-weight:500;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--blue); color:#fff; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; }
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(0,0,0,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .logo{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:15px; letter-spacing:-0.01em; }
+  .logo .tri{ font-size:16px; }
+  .logo .by{ color:var(--text-dimmer); font-weight:500; font-size:14px; }
+  .navlinks{ display:flex; gap:28px; font-size:14px; color:var(--text-dim); }
+  .navlinks a{ transition:color .15s; white-space:nowrap; }
+  .navlinks a:hover{ color:var(--text); }
+  @media (max-width:760px){ .navlinks{ display:none; } }
+
+  /* EYEBROW */
+  .eyebrow{
+    font-family:var(--mono); font-size:13px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--blue); display:flex; align-items:center; gap:8px; margin-bottom:16px;
+  }
+  .eyebrow::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--blue); box-shadow:0 0 8px var(--blue); }
+
+  /* HERO */
+  .hero{ padding:110px 0 90px; border-bottom:1px solid var(--border-soft); }
+  .hero h1{
+    font-size:clamp(30px, 4.6vw, 50px); font-weight:700; letter-spacing:-0.02em; line-height:1.14;
+    max-width:860px;
+  }
+  .hero h1 em{ font-style:normal; color:var(--text-dim); }
+  .hero .sub{ margin-top:22px; color:var(--text-dim); font-size:16px; max-width:620px; }
+
+  /* SECTION */
+  section{ padding:76px 0; border-bottom:1px solid var(--border-soft); }
+  section h2{ font-size:clamp(24px,3vw,32px); font-weight:700; letter-spacing:-0.015em; margin-bottom:14px; max-width:680px; }
+  section > .wrap > p.lead{ color:var(--text-dim); font-size:15.5px; max-width:660px; margin-bottom:36px; }
+
+  .note{
+    font-family:var(--mono); font-size:13.5px; color:var(--text-dimmer);
+    border-left:2px solid var(--border); padding-left:12px; margin-top:20px; max-width:560px;
+  }
+
+  /* PROFILE CARD (Sharon context) */
+  .profile{
+    display:grid; grid-template-columns:auto 1fr; gap:28px;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
+    padding:28px; align-items:start;
+  }
+  @media (max-width:640px){ .profile{ grid-template-columns:1fr; } }
+  .profile .avatar{
+    width:56px; height:56px; border-radius:50%;
+    background:linear-gradient(135deg,var(--blue),#00c2ff);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px; color:#fff;
+    flex-shrink:0;
+  }
+  .profile h3{ font-size:17px; font-weight:600; }
+  .profile .role{ color:var(--text-dimmer); font-size:14px; font-family:var(--mono); margin-top:2px; margin-bottom:16px; }
+  .profile-facts{ display:grid; gap:10px; }
+  .profile-facts li{ list-style:none; position:relative; padding-left:18px; font-size:15px; color:var(--text-dim); }
+  .profile-facts li::before{ content:'—'; position:absolute; left:0; top:0; color:var(--text-dimmer); }
+  .profile-facts b{ color:var(--text); font-weight:600; }
+
+  /* ORG DIAGRAM */
+  .org{ padding:48px 0 10px; }
+  .org-row{ display:flex; justify-content:center; }
+  .org-node{
+    font-family:var(--mono); font-size:14px; text-align:center;
+    border:1px solid var(--border); border-radius:8px; padding:16px 22px;
+    background:var(--bg-card); min-width:150px; position:relative; z-index:1;
+    box-shadow:0 2px 12px rgba(0,0,0,0.3);
+  }
+  .org-node .label{ color:var(--text); font-weight:600; }
+  .org-node.accent-blue{ border-color:#0070f377; background:#0070f31c; }
+  .org-node.accent-green{ border-color:#2ecc7177; background:#2ecc711c; }
+  .org-node.accent-blue-soft{ border-color:#0070f355; background:#0070f30f; }
+  .org-node.accent-green-soft{ border-color:#2ecc7155; background:#2ecc710f; }
+  .org-branch{ display:flex; justify-content:center; gap:60px; margin-top:56px; position:relative; z-index:1; }
+  @media (max-width:700px){ .org-branch{ gap:20px; flex-wrap:wrap; justify-content:center; } }
+  .org-tier-wrap{ display:flex; flex-direction:column; align-items:center; }
+  .org-bottom{ display:flex; justify-content:center; gap:90px; margin-top:56px; position:relative; z-index:1; }
+  @media (max-width:700px){ .org-bottom{ gap:20px; flex-wrap:wrap; justify-content:center; } }
+  .org-diagram{ position:relative; padding:10px 0 0; }
+  .org-lines{ position:absolute; top:0; left:0; pointer-events:none; }
+
+  /* EXCHANGE DIAGRAM (What We Need) */
+  .exchange{ display:flex; align-items:center; gap:26px; margin-top:20px; }
+  @media (max-width:760px){ .exchange{ flex-direction:column; } }
+  .exchange-node{
+    border:1px solid var(--blue-dim); background:#0070f314; border-radius:12px;
+    padding:22px 20px; text-align:center; font-weight:600; font-size:16px; min-width:140px; flex-shrink:0;
+  }
+  .exchange-flows{ flex:1; display:flex; flex-direction:column; gap:24px; width:100%; }
+  .flow-row{ display:flex; align-items:center; gap:14px; }
+  @media (max-width:600px){ .flow-row{ align-items:flex-start; } }
+  .flow-label{
+    font-family:var(--mono); font-size:11.5px; color:var(--text-dimmer); text-transform:uppercase;
+    letter-spacing:.05em; width:96px; flex-shrink:0; line-height:1.4;
+  }
+  .flow-arrow{ font-size:18px; color:var(--text-dimmer); flex-shrink:0; width:20px; text-align:center; }
+  .flow-items{ display:flex; gap:10px; flex-wrap:wrap; flex:1; }
+  .flow-chip{
+    border:1px solid var(--border); background:var(--bg-card); border-radius:9px;
+    padding:12px 14px; font-size:14.5px; color:var(--text-dim); flex:1; min-width:220px;
+  }
+  .flow-chip b{ color:var(--text); font-weight:600; }
+  .flow-chip.open{ border-color:#f5a62333; }
+  .flow-chip.open .q{ color:var(--amber); font-family:var(--mono); margin-right:6px; }
+
+  /* SCORING ENGINE — signature */
+  .scoring{ margin-top:24px; }
+  .scoring-head{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+    padding-bottom:20px; margin-bottom:28px; border-bottom:1px solid var(--border-soft);
+  }
+  .scoring-head .name{ font-family:var(--mono); font-size:14px; color:var(--text-dim); }
+  .scoring-head .status{ font-family:var(--mono); font-size:12px; color:var(--green); border:1px solid #2ecc7133; padding:4px 10px; border-radius:20px; background:#2ecc7110; }
+  .scoring-signal{ font-family:var(--mono); font-size:12px; color:var(--text-dimmer); text-align:center; }
+
+  /* PANEL LANGUAGE (label / callout-line / spotlight / colored flow) */
+  .panel-label{
+    text-align:center; font-family:var(--mono); font-size:12px; color:var(--text-dimmer);
+    text-transform:uppercase; letter-spacing:.09em; margin-bottom:18px;
+  }
+  .callout-line{
+    border:1px solid var(--border); border-radius:10px; padding:12px 18px;
+    text-align:center; font-family:var(--mono); font-size:13.5px; color:var(--blue);
+    background:var(--bg-card); margin:18px 0;
+  }
+  .flow-down{ display:flex; justify-content:center; padding:8px 0; font-size:18px; color:var(--text-dimmer); }
+  .flow-down.blue{ color:var(--blue); }
+  .flow-down.green{ color:var(--green); }
+  .flow-down.amber{ color:var(--amber); }
+  .spotlight{
+    border:1px solid var(--blue-dim); background:#0070f314; border-radius:12px;
+    padding:22px 26px; text-align:center; margin-top:20px;
+  }
+  .spotlight-label{
+    font-family:var(--mono); font-size:11px; color:var(--blue); text-transform:uppercase;
+    letter-spacing:.08em; margin-bottom:10px;
+  }
+  .spotlight h4{ font-size:16px; font-weight:600; color:var(--text); margin-bottom:8px; }
+  .spotlight p{ font-size:14.5px; color:var(--text-dim); max-width:540px; margin:0 auto; line-height:1.6; }
+  .spotlight.amber{ border-color:#f5a62366; background:#f5a62314; }
+  .spotlight.amber .spotlight-label{ color:var(--amber); }
+
+  /* SCORING PIPELINE */
+  .pipeline{ display:flex; align-items:flex-start; gap:14px; flex-wrap:wrap; }
+  .pipeline-stage{ flex:1; min-width:210px; display:flex; flex-direction:column; }
+  .stage-label{ font-family:var(--mono); font-size:11.5px; color:var(--text-dimmer); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
+  .stage-box{ border:1px solid var(--border); border-radius:12px; padding:14px 16px; background:var(--bg-card); font-size:14px; color:var(--text-dim); flex:1; }
+  .stage-sub{ display:block; font-family:var(--mono); font-size:11.5px; color:var(--text-dimmer); margin-top:8px; line-height:1.6; }
+  .stage-sub a, .stage-box a{ color:var(--blue); text-decoration:none; border-bottom:1px solid #0070f34d; }
+  .stage-sub a:hover, .stage-box a:hover{ border-bottom-color:var(--blue); }
+  .criteria-box{ display:flex; flex-direction:column; gap:9px; }
+  .criteria-row{ font-size:13px; color:var(--text-dim); padding-bottom:9px; border-bottom:1px solid var(--border-soft); }
+  .criteria-row:last-child{ border-bottom:none; padding-bottom:0; }
+  .criteria-key{ color:var(--text); font-weight:600; font-family:var(--mono); font-size:11.5px; text-transform:uppercase; margin-right:6px; }
+  .pipeline-arrow{ display:flex; align-items:center; justify-content:center; color:var(--blue); font-size:18px; flex-shrink:0; padding-top:24px; }
+  @media (max-width:760px){
+    .pipeline{ flex-direction:column; }
+    .pipeline-arrow{ transform:rotate(90deg); padding:2px 0; }
+  }
+  .lists{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:20px; }
+  @media (max-width:760px){ .lists{ grid-template-columns:1fr; } }
+  .list-card{ border-radius:12px; padding:18px; border:1px solid var(--border); }
+  .list-card .list-tag{ font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px; display:inline-block; padding:3px 8px; border-radius:5px; }
+  .list-card.a{ background:#0070f30a; border-color:#0070f333; }
+  .list-card.a .list-tag{ color:var(--blue); background:#0070f31a; }
+  .list-card.a .dest{ color:#5b9fee; }
+  .list-card.b{ background:#2ecc7108; border-color:#2ecc7133; }
+  .list-card.b .list-tag{ color:var(--green); background:#2ecc711a; }
+  .list-card.b .dest{ color:#4ecf8a; }
+  .list-card.c{ background:#6e6e6e0a; border-color:#333; }
+  .list-card.c .list-tag{ color:var(--text-dim); background:#ffffff0d; }
+  .list-card h4{ font-size:15.5px; font-weight:600; margin-bottom:8px; }
+  .list-card p{ font-size:14px; color:var(--text-dim); margin-bottom:10px; }
+  .list-card .dest{ font-family:var(--mono); font-size:12px; color:var(--text-dimmer); border-top:1px solid var(--border-soft); padding-top:10px; }
+  .list-card .dest-label{ display:block; font-size:9.5px; color:var(--text-dimmer); text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; opacity:0.8; }
+
+  /* IDEA CARDS */
+  .idea-card{
+    border:1px solid var(--border); border-radius:16px; padding:32px;
+    margin-top:28px; background:var(--bg-raised);
+  }
+  .idea-header{ display:flex; align-items:center; gap:14px; margin-bottom:8px; flex-wrap:wrap; }
+  .idea-num{
+    font-family:var(--mono); font-size:13px; color:var(--blue); font-weight:600;
+    border:1px solid var(--blue-dim); background:#0070f31c; border-radius:6px;
+    padding:4px 10px; flex-shrink:0;
+  }
+  .idea-header h3{ font-size:19px; font-weight:600; margin:0; }
+  .idea-card > .block-sub{ margin-bottom:4px; }
+  .idea-card .scoring{ margin-top:16px; }
+  .idea-card .mini-flow{ margin-top:20px; }
+  .idea-card .suppression-note{ margin-top:16px; }
+
+  .build-divider{
+    display:flex; align-items:center; gap:14px; margin:48px 0 8px;
+    font-family:var(--mono); font-size:12px; color:var(--text-dimmer); text-transform:uppercase; letter-spacing:.08em;
+  }
+  .build-divider::before, .build-divider::after{ content:''; flex:1; height:1px; background:var(--border-soft); }
+
+  .block{ margin-top:36px; }
+  .block h3{ font-size:18px; font-weight:600; margin-bottom:14px; }
+  .block-sub{ font-size:15px; color:var(--text-dim); max-width:680px; margin-top:-4px; }
+  .webinar-refs{ font-size:12.5px; color:var(--text-dimmer); margin-top:10px; line-height:1.7; }
+  .webinar-refs a{ color:var(--blue); text-decoration:none; border-bottom:1px solid #0070f34d; }
+  .webinar-refs a:hover{ border-bottom-color:var(--blue); }
+  .block ul{ list-style:none; display:grid; gap:12px; }
+  .block li{ position:relative; padding-left:20px; font-size:15.5px; color:var(--text-dim); }
+  .block li::before{ content:'→'; position:absolute; left:0; top:0; color:var(--text-dimmer); }
+  .block li.open::before{ content:'?'; color:var(--amber); }
+  .block li b{ color:var(--text); font-weight:600; }
+
+  /* MINI FLOW (CRM idea, AEO idea) */
+  .mini-flow{ display:flex; align-items:center; gap:14px; margin-top:14px; }
+  @media (max-width:760px){ .mini-flow{ flex-direction:column; align-items:stretch; } .mini-flow .pipeline-arrow{ transform:rotate(90deg); } }
+  .mini-flow > .arch-node{ flex:1; min-width:0; }
+  .mini-flow-group{ display:flex; flex-direction:column; gap:10px; flex:1; min-width:200px; }
+  .mini-flow-record{
+    border:1px solid #2ecc7177; background:#2ecc711c; border-radius:12px;
+    padding:18px; text-align:center; font-weight:600; font-size:15px; min-width:170px;
+  }
+  .mini-flow-record .stage-sub{ text-align:center; font-weight:500; }
+  .suppression-note{
+    margin-top:16px; border:1px solid var(--border); border-radius:12px; padding:16px 18px;
+    font-size:14.5px; color:var(--text-dim); background:var(--bg-card);
+  }
+  .suppression-note b{ color:var(--text); }
+
+  .lowpriority{ margin-top:40px; border:1px solid var(--border-soft); border-radius:12px; padding:22px 24px; background:transparent; }
+  .lowpriority .tag{ font-family:var(--mono); font-size:12px; color:var(--text-dimmer); text-transform:uppercase; letter-spacing:.06em; margin-bottom:14px; }
+  .lowpriority ul{ list-style:none; display:grid; gap:12px; }
+  .lowpriority li{ position:relative; padding-left:16px; font-size:15px; color:var(--text-dimmer); }
+  .lowpriority li::before{ content:'·'; position:absolute; left:0; top:0; }
+
+  /* ARCHITECTURE DIAGRAM */
+  .arch-grid{
+    display:grid; grid-template-columns: 1fr 36px 1.25fr 36px 1fr;
+    align-items:center; margin-top:12px;
+  }
+  .arch-col{ display:flex; flex-direction:column; gap:12px; align-self:start; }
+  .arch-col-label{
+    font-family:var(--mono); font-size:12px; color:var(--text-dimmer); text-transform:uppercase;
+    letter-spacing:.06em; margin-bottom:2px;
+  }
+  .arch-node{
+    border:1px solid var(--border); border-radius:9px; padding:12px 14px; font-size:14px;
+    background:var(--bg-card); color:var(--text-dim);
+  }
+  .arch-node.dst{ color:var(--text); }
+  .arch-node.blue{ border-color:#0070f34d; background:#0070f314; color:var(--text); }
+  .arch-node.green{ border-color:#2ecc714d; background:#2ecc7114; color:var(--text); }
+  .arch-arrow-col{ display:flex; align-items:center; justify-content:center; color:var(--text-dimmer); font-size:18px; align-self:stretch; }
+  .agent-node{
+    border:1px solid var(--blue-dim); border-radius:10px; padding:16px; background:#0070f30a;
+  }
+  .agent-node .agent-name{ font-weight:600; font-size:15.5px; margin-bottom:6px; }
+  .agent-node .agent-desc{ font-size:14px; color:var(--text-dim); line-height:1.5; }
+  .agent-node .gate{
+    margin-top:10px; font-family:var(--mono); font-size:12px; color:var(--amber);
+    border:1px solid #f5a62333; background:#f5a62310; border-radius:6px; padding:6px 10px;
+    display:inline-block;
+  }
+  @media (max-width:760px){
+    .arch-grid{ grid-template-columns:1fr; }
+    .arch-arrow-col{ transform:rotate(90deg); padding:6px 0; }
+  }
+
+  .qlist{ display:grid; gap:16px; max-width:700px; margin-top:28px; }
+  .qcard{ border:1px solid var(--border); border-radius:10px; padding:18px 20px; background:var(--bg-card); display:flex; gap:14px; align-items:flex-start; }
+  a.qcard{ transition:border-color .15s, background .15s; }
+  a.qcard:hover{ border-color:var(--blue-dim); background:#0070f30a; }
+  .qcard .qn{ font-family:var(--mono); font-size:13px; color:var(--blue); flex-shrink:0; padding-top:2px; }
+  .qcard p{ font-size:15.5px; color:var(--text); }
+
+  footer{ padding:60px 0 80px; text-align:center; }
+  footer p{ color:var(--text-dimmer); font-size:14px; font-family:var(--mono); }
+
+  .reveal{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{ animation: revealIn .6s ease both; }
+  }
+  @keyframes revealIn{
+    from{ opacity:0; transform:translateY(14px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo"><span class="tri">▲</span> Growth × Demand Gen <span class="by">— Kat An</span></div>
+    <div class="navlinks">
+      <a href="#together">Ideas</a>
+      <a href="#reference">Reference</a>
+    </div>
+  </div>
+</nav>
+
+<section id="together">
+  <div class="wrap">
+    <div class="eyebrow">01 — How We Work Together</div>
+    <h2>What we can build together</h2>
+
+    <div class="idea-card reveal">
+      <div class="idea-header">
+        <span class="idea-num">Idea 01</span>
+        <h3>Paid lead scoring &amp; routing engine</h3>
+      </div>
+
+      <div class="scoring">
+        <div class="pipeline">
+          <div class="pipeline-stage">
+            <div class="stage-label">Input</div>
+            <div class="stage-box">
+              All paid leads
+              <span class="stage-sub">Google, LinkedIn demo requests</span>
+            </div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-stage">
+            <div class="stage-label">Scoring Criteria</div>
+            <div class="stage-box criteria-box">
+              <div class="criteria-row"><span class="criteria-key">Title &amp; ICP fit</span>stops immediately only on personal/free email domains (gmail, yahoo, etc.) · CTO / CISO / VP+ = 3 pts · Senior Eng / Head of = 2 pts · other = 0 pts</div>
+              <div class="criteria-row"><span class="criteria-key">Company size</span>500+ employees = 3 pts · under 500 = 1 pt</div>
+            </div>
+          </div>
+          <div class="pipeline-arrow">→</div>
+          <div class="pipeline-stage">
+            <div class="stage-label">Output</div>
+            <div class="stage-box">
+              <div style="color:var(--text); font-size:14px; margin-bottom:12px;">Assign a tier — A, B, or C</div>
+              <div class="criteria-box">
+                <div class="criteria-row"><span class="criteria-key">A</span>5–6 pts</div>
+                <div class="criteria-row"><span class="criteria-key">B</span>3–4 pts</div>
+                <div class="criteria-row"><span class="criteria-key">C</span>under 3 pts</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mini-flow" style="margin-top:14px;">
+          <div class="arch-node green">Primary interest = v0</div>
+          <div class="pipeline-arrow" style="padding-top:0;">→</div>
+          <div class="arch-node dst blue">Self-serve drip — product tips, deploy-free CTA. Skips scoring entirely, regardless of title or company size.</div>
+        </div>
+
+        <div class="callout-line">For everyone else: every lead is checked against the CRM — if there's already an open opportunity, scoring is skipped</div>
+
+        <div class="flow-down blue">↓</div>
+
+        <div class="lists">
+          <div class="list-card a">
+            <span class="list-tag">List A · 5–6 pts</span>
+            <h4>Sales-ready</h4>
+            <p>Right title + company size, and not already in an open opportunity</p>
+            <div class="dest"><span class="dest-label">Shared with</span>Sales, immediately, with full source context</div>
+          </div>
+          <div class="list-card b">
+            <span class="list-tag">List B · 3–4 pts</span>
+            <h4>Nurture</h4>
+            <p>Right on title or company size, but not both — not yet sales-ready</p>
+            <div class="dest"><span class="dest-label">Shared with</span>Demand Gen enterprise drip — webinar invites, case studies</div>
+          </div>
+          <div class="list-card c">
+            <span class="list-tag">List C · under 3</span>
+            <h4>Weak enterprise fit</h4>
+            <p>Wrong title, wrong company size, or both — not necessarily a bad lead, just not this motion</p>
+            <div class="dest"><span class="dest-label">Shared with</span>Demand Gen general nurture drip · added to enterprise-specific exclusion lists on Google/LinkedIn</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="idea-card reveal">
+      <div class="idea-header">
+        <span class="idea-num">Idea 02</span>
+        <h3>Webinar Ad Intelligence Agent</h3>
+      </div>
+      <p class="block-sub">For every new webinar topic — Shopify headless commerce, agentic image workflows, AI marketing agents — the agent builds the keyword set and ad copy before the webinar goes live.</p>
+      <p class="webinar-refs">Based on your recent programs: <a href="https://vercel.com/go/inside-floras-ai-image-agent-architecture" target="_blank" rel="noopener">Flora's AI Image Agent Architecture</a> · <a href="https://vercel.com/go/next-gen-shopify-commerce-with-vercel" target="_blank" rel="noopener">Next-Gen Shopify Commerce</a> · <a href="https://vercel.com/go/agentic-commerce-in-2026" target="_blank" rel="noopener">Agentic Commerce in 2026</a> · <a href="https://vercel.com/go/build-your-ai-marketing-team-with-eve" target="_blank" rel="noopener">Build Your AI Marketing Team with eve</a></p>
+
+      <div class="pipeline" style="margin-top:16px;">
+        <div class="pipeline-stage">
+          <div class="stage-label">Trigger</div>
+          <div class="stage-box">
+            New webinar added to the calendar
+            <span class="stage-sub">Demand Gen creates the event — the agent is alerted automatically</span>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-stage">
+          <div class="stage-label">Reads</div>
+          <div class="stage-box">
+            Webinar title + description
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-stage">
+          <div class="stage-label">Generates</div>
+          <div class="stage-box">
+            Keyword campaign + ad copy
+            <span class="stage-sub">Ad Creation Agent adds it to the same <a href="https://docs.google.com/spreadsheets/d/1hN6fPNrMqql3-FGvP2mn7ZRH0K0igd8HEs6kqL1zI-A/edit?gid=354993596#gid=354993596" target="_blank" rel="noopener">ad creation output</a> already built — reviewed there before anything pushes live to Google</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-down blue">↓</div>
+
+      <div class="spotlight">
+        <div class="spotlight-label">Outcome</div>
+        <h4>A/B test: demo request landing page vs. webinar signup page</h4>
+      </div>
+    </div>
+
+    <div class="idea-card reveal">
+      <div class="idea-header">
+        <span class="idea-num">Idea 03</span>
+        <h3>Ad intelligence Agent for Demand Generation Team</h3>
+      </div>
+
+      <div class="mini-flow-group" style="margin-top:16px;">
+        <div class="arch-node blue">Keyword performance, by webinar topic</div>
+        <div class="arch-node blue">A/B test results from Idea 02 — demo page vs. webinar signup, by topic</div>
+        <div class="arch-node blue">Which ad angles and headlines get the highest CTR and signup rate</div>
+      </div>
+
+      <div class="flow-down blue">↓</div>
+
+      <div class="spotlight amber">
+        <div class="spotlight-label">Slack · Monday morning</div>
+        <h4>Weekly ad intelligence digest</h4>
+        <p>What's resonating, what to test next in webinars</p>
+      </div>
+    </div>
+
+    <div class="idea-card reveal">
+      <div class="idea-header">
+        <span class="idea-num">Idea 04</span>
+        <h3>Webinar content becomes the ad creation engine</h3>
+      </div>
+
+      <div class="mini-flow">
+        <div class="arch-node green">Full webinar recording + transcript</div>
+        <div class="pipeline-arrow" style="padding-top:0;">→</div>
+        <div class="arch-node">Webinar Agent extracts key insights, keywords &amp; video highlights</div>
+        <div class="pipeline-arrow" style="padding-top:0;">→</div>
+        <div class="arch-node dst blue">Shared with Ad Creation Agent — new ad copy + queued for Meta video ads</div>
+      </div>
+    </div>
+
+    <div class="idea-card reveal">
+      <div class="idea-header">
+        <span class="idea-num">Idea 05</span>
+        <h3>Webinar Attendee Audience Builder</h3>
+      </div>
+
+      <div class="pipeline" style="margin-top:16px;">
+        <div class="pipeline-stage">
+          <div class="stage-label">Input</div>
+          <div class="stage-box">
+            Webinar attendee list
+            <span class="stage-sub">synced automatically after every webinar</span>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-stage">
+          <div class="stage-label">Builds</div>
+          <div class="stage-box">
+            Custom audience
+            <span class="stage-sub">same title + company size filter as Idea 01</span>
+          </div>
+        </div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-stage">
+          <div class="stage-label">Pushes</div>
+          <div class="stage-box">
+            Live to ad platforms
+            <span class="stage-sub">Google Customer Match + LinkedIn Matched Audiences</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-down blue">↓</div>
+
+      <div class="spotlight">
+        <div class="spotlight-label">On demo request submitted</div>
+        <h4>Removed from the audience, added to suppression</h4>
+        <p>Paid stops paying to reach someone who's already converted.</p>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<section id="reference">
+  <div class="wrap">
+    <div class="eyebrow">Reference</div>
+    <div class="qlist reveal">
+      <a class="qcard" href="https://vercel-strategy.vercel.app/" target="_blank" rel="noopener">
+        <div class="qn">↗</div>
+        <p>Paid acquisition strategy — channel strategy, ICPs, and campaign concepts</p>
+      </a>
+      <a class="qcard" href="https://vercel-strategy-agent.vercel.app/" target="_blank" rel="noopener">
+        <div class="qn">↗</div>
+        <p>Agent build — working prototype of the paid competitor intelligence and ad creation agents</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
